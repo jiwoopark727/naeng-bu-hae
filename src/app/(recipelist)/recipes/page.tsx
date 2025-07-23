@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-export default function Home() {
+export default function RecipesPage() {
   const list = [
     { pic: 'food1.png', menu: '저염 간장을 이용한 닭게장 비빔밥' },
     { pic: 'food2.png', menu: '순두부 찌개' },
