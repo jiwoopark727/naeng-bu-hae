@@ -4,7 +4,14 @@ import StepImg from '../../../../../../public/food2.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft, faAngleRight, faCheck } from '@fortawesome/free-solid-svg-icons';
 
-export default function DetailPage() {
+type Props = {
+  params: { name: string };
+};
+
+export default function DetailPage({ params }: Props) {
+  const menu = decodeURIComponent(params.name);
+
+  // api 데이터로 대체 예정
   const ingredients = [
     '두부 곤약잡곡밥 두부 110g(⅓모)',
     '현미쌀 3g',
@@ -26,7 +33,7 @@ export default function DetailPage() {
   return (
     <div className={`relative w-[90%] h-full overflow-y-scroll [&::-webkit-scrollbar]:hidden`}>
       <div className='absolute top-5 w-full flex justify-center mb-5 pb-1.5 border-b border-gray-200'>
-        <p className='font-bold'>저염 간장을 이용한 닭개장 비빔밥</p>
+        <p className='font-bold text-center break-keep'>{menu}</p>
       </div>
       <Image
         src={FoodImg}
