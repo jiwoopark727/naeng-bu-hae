@@ -1,7 +1,6 @@
 import Image from 'next/image';
-import FoodImg from '../../../../public/food1.png';
-import CheckImg from '../../../../public/assets/images/Check.png';
-import StepImg from '../../../../public/food2.png';
+import FoodImg from '../../../../../../public/food1.png';
+import StepImg from '../../../../../../public/food2.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft, faAngleRight, faCheck } from '@fortawesome/free-solid-svg-icons';
 
