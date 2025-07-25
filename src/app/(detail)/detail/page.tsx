@@ -2,6 +2,8 @@ import Image from 'next/image';
 import FoodImg from '../../../../public/food1.png';
 import CheckImg from '../../../../public/assets/images/Check.png';
 import StepImg from '../../../../public/food2.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleLeft, faAngleRight, faCheck } from '@fortawesome/free-solid-svg-icons';
 
 export default function DetailPage() {
   const ingredients = [
@@ -42,13 +44,10 @@ export default function DetailPage() {
           <ul className='pb-2 text-xs/5'>
             {ingredients.map((a) => (
               <div className='flex items-center' key={a}>
-                <Image
-                  src={CheckImg}
-                  alt='Check'
-                  width={8}
-                  height={6}
-                  className='h-fit ml-1.5 mr-1.5'
-                ></Image>
+                <FontAwesomeIcon
+                  icon={faCheck}
+                  className='text-xs w-3 h-3 ml-1.5 mr-1.5 text-sky-300'
+                />
                 <li>{a}</li>
               </div>
             ))}
@@ -59,10 +58,14 @@ export default function DetailPage() {
         <div className='border-b-2 border-gray-200 pb-1'>
           <p className='font-bold'>레시피</p>
         </div>
-        <div className='flex justify-between mb-4 pt-2 pb-2 border-b border-gray-200'>
-          <span className='cursor-pointer'>&#60;</span>
+        <div className='flex justify-between items-center mb-4 pt-2 pb-2 border-b border-gray-200'>
+          <span className='cursor-pointer'>
+            <FontAwesomeIcon icon={faAngleLeft} className='w-3 h-3' />
+          </span>
           <span className='text-sky-400 font-bold text-[14px]'>Step.1</span>
-          <span className='cursor-pointer'>&#62;</span>
+          <span className='cursor-pointer'>
+            <FontAwesomeIcon icon={faAngleRight} className='w-3 h-3' />
+          </span>
         </div>
         <div className='flex justify-center mb-4'>
           <Image src={StepImg} alt='step' width={265} height={130} className='rounded-xl'></Image>
