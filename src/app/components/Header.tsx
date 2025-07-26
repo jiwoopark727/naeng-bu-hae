@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Logo from '../../../public/assets/images/Logo.png';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 export default function Header() {
   const router = useRouter();
@@ -10,6 +10,16 @@ export default function Header() {
   const handleLogoClick = () => {
     router.push('/');
   };
+
+  const handleMartClick = () => {
+    router.push('/mart');
+  };
+
+  const handleHomeClick = () => {
+    router.push('/ingredients');
+  };
+
+  const pathname = usePathname();
 
   return (
     <div className='w-full h-[78px] bg-white flex items-center px-6 justify-between'>
@@ -19,9 +29,23 @@ export default function Header() {
       >
         <Image src={Logo} alt='Logo' width={40} height={40}></Image>
       </span>
-      <span className='text-sm font-semibold cursor-pointer transition-all duration-300 hover:text-blue-400 translate-y-[2px] hover:translate-x-[5px]'>
-        장보러 가기 ➡️
-      </span>
+      <>
+        {pathname === '/mart' ? (
+          <span
+            onClick={handleHomeClick}
+            className='text-sm font-semibold cursor-pointer transition-all duration-300 hover:text-blue-400 translate-y-[2px] hover:translate-x-[5px]'
+          >
+            집 가기 ➡️
+          </span>
+        ) : (
+          <span
+            onClick={handleMartClick}
+            className='text-sm font-semibold cursor-pointer transition-all duration-300 hover:text-blue-400 translate-y-[2px] hover:translate-x-[5px]'
+          >
+            마트 가기 ➡️
+          </span>
+        )}
+      </>
     </div>
   );
 }
