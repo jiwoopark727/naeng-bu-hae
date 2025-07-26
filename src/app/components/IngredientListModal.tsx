@@ -3,10 +3,12 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 const Ingredients = ['다진 마늘', '우유', '계란', '김치', '두부', '목살'];
 
-export default function IngredientList() {
+export default function IngredientListModal() {
   const router = useRouter();
 
   const handleXclick = () => {
@@ -37,14 +39,14 @@ export default function IngredientList() {
       className='absolute top-50 right-5 z-20 text-md text-black w-70 h-130 bg-white rounded-[15px] opacity-95 p-4'
       initial={{ opacity: 0, scale: 0.9, x: -50, y: -140 }}
       animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
-      transition={{ duration: 0.4, ease: 'easeOut' }}
+      transition={{ duration: 0.25, ease: 'easeOut' }}
     >
       <div className='h-full'>
         <div className='relative w-full h-full'>
           <span className='flex justify-between items-center mb-4'>
             <p className='text-md font-semibold'>냉장고에 있는 재료</p>
             <span className='px-2 cursor-pointer' onClick={handleXclick}>
-              X
+              <FontAwesomeIcon icon={faXmark} />
             </span>
           </span>
 

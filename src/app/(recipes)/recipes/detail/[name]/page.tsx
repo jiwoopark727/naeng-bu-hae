@@ -1,88 +1,125 @@
+'use client';
+
 import Image from 'next/image';
-import FoodImg from '../../../../../../public/food1.png';
-import StepImg from '../../../../../../public/food2.png';
+import fallback from '../../../../../../public/fallback.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleLeft, faAngleRight, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
+import { use, useEffect, useState } from 'react';
 
 type Props = {
-  params: { name: string };
+  params: Promise<{ name: string }>;
+};
+
+type Recipe = {
+  RCP_NM: string;
+  ATT_FILE_NO_MAIN: string;
+  RCP_PARTS_DTLS: string;
+  MANUAL01: string;
+  MANUAL_IMG01: string;
 };
 
 export default function DetailPage({ params }: Props) {
-  const menu = decodeURIComponent(params.name);
+  const { name } = use(params);
+  const menu = decodeURIComponent(name);
+  const [recipe, setRecipe] = useState<Recipe | null>(null);
 
-  // api 데이터로 대체 예정
-  const ingredients = [
-    '두부 곤약잡곡밥 두부 110g(⅓모)',
-    '현미쌀 3g',
-    '찹쌀 3g',
-    '실곤약 3g',
-    '나물준비 콩나물 15g(15개)',
-    '표고버섯 4g(1/2장)',
-    '애호박 10g(5×2×1cm)',
-    '고사리 15g(7줄기)',
-    '당근 15g(5×3×1cm)',
-    '소금 3g(2/3작은술)',
-    '소금 약간(나물데침)',
-    '비빔고추장 소스 초고추장 5g(1작은술)',
-    '플레인요거트 10g(2작은술)',
-    '참기름 2g(1/3작은술)',
-    '곁들임 새싹채소 3g',
-  ];
+  useEffect(() => {
+    if (!menu) return;
+
+    const fetchRecipeDetail = async (name: string) => {
+      try {
+        const res = await fetch(
+          `/api/recipes/detail?name=${encodeURIComponent(name)}`
+        );
+        const json = await res.json();
+
+        if (!res.ok || !json.success) {
+          throw new Error(json.message || '레시피를 불러오지 못했습니다.');
+        }
+
+        setRecipe(json.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchRecipeDetail(menu);
+    console.log('레시피 디테일 api fetch');
+  }, [menu]);
+
+  console.log(recipe);
+  if (!recipe) return <p className='p-4'>{menu} 레시피를 불러오는 중...</p>;
 
   return (
-    <div className={`relative w-[90%] h-full overflow-y-scroll [&::-webkit-scrollbar]:hidden`}>
-      <div className='absolute top-5 w-full flex justify-center mb-5 pb-1.5 border-b border-gray-200'>
-        <p className='font-bold text-center break-keep'>{menu}</p>
+    <div className='relative w-full h-full flex flex-col overflow-hidden px-4 py-2'>
+      {/* 제목 (헤더 안에 있으니 여기선 그냥 margin) */}
+      <div className='mb-3 text-center font-bold text-lg break-keep'>
+        {recipe.RCP_NM}
       </div>
-      <Image
-        src={FoodImg}
-        alt='FoodImg'
-        width={393}
-        height={800}
-        className='absolute top-20 rounded-xl'
-      ></Image>
-      <div className='absolute w-full top-85 border border-gray-200 rounded-xl'>
-        <div className='pt-2 pb-2 pl-3 mb-2 bg-gray-100 text-xs font-bold'>
-          <p>재료</p>
-        </div>
-        <div>
-          <ul className='pb-2 text-xs/5'>
-            {ingredients.map((a) => (
-              <div className='flex items-center' key={a}>
-                <FontAwesomeIcon
-                  icon={faCheck}
-                  className='text-xs w-3 h-3 ml-1.5 mr-1.5 text-sky-300'
-                />
-                <li>{a}</li>
-              </div>
-            ))}
-          </ul>
-        </div>
+
+      {/* 이미지 */}
+      <div className='flex justify-center mb-4'>
+        <Image
+          src={recipe.ATT_FILE_NO_MAIN || fallback}
+          alt={recipe.RCP_NM}
+          width={350}
+          height={350}
+          className='rounded-xl object-cover'
+        />
       </div>
-      <div className='absolute top-180 w-full text-xs'>
-        <div className='border-b-2 border-gray-200 pb-1'>
-          <p className='font-bold'>레시피</p>
+
+      {/* 재료 */}
+      <section className='bg-gray-50 rounded-xl border border-gray-300 p-3 mb-4 text-xs font-bold'>
+        <p className='mb-2'>재료</p>
+        <div className='font-normal space-y-1'>
+          {recipe.RCP_PARTS_DTLS.split(',').map((item) => (
+            <div key={item.trim()} className='pl-2'>
+              {item.trim()}
+            </div>
+          ))}
         </div>
-        <div className='flex justify-between items-center mb-4 pt-2 pb-2 border-b border-gray-200'>
-          <span className='cursor-pointer'>
-            <FontAwesomeIcon icon={faAngleLeft} className='w-3 h-3' />
-          </span>
-          <span className='text-sky-400 font-bold text-[14px]'>Step.1</span>
-          <span className='cursor-pointer'>
-            <FontAwesomeIcon icon={faAngleRight} className='w-3 h-3' />
-          </span>
+      </section>
+
+      {/* 레시피(스크롤 영역) */}
+      <section className='flex flex-col flex-grow overflow-y-auto border border-gray-300 rounded-xl p-3 text-xs'>
+        <div className='border-b-2 border-gray-200 pb-1 mb-2 font-bold'>
+          레시피
         </div>
+
+        <div className='flex justify-between items-center mb-3'>
+          <button
+            type='button'
+            className='cursor-pointer text-gray-600 hover:text-gray-900'
+            aria-label='이전 단계'
+          >
+            <FontAwesomeIcon icon={faAngleLeft} className='w-5 h-5' />
+          </button>
+
+          <span className='text-sky-400 font-bold text-sm'>Step.1</span>
+
+          <button
+            type='button'
+            className='cursor-pointer text-gray-600 hover:text-gray-900'
+            aria-label='다음 단계'
+          >
+            <FontAwesomeIcon icon={faAngleRight} className='w-5 h-5' />
+          </button>
+        </div>
+
         <div className='flex justify-center mb-4'>
-          <Image src={StepImg} alt='step' width={265} height={130} className='rounded-xl'></Image>
+          <Image
+            src={recipe.MANUAL_IMG01 || fallback}
+            alt='step'
+            width={265}
+            height={130}
+            className='rounded-xl object-cover'
+          />
         </div>
-        <div className='mb-10'>
-          <p>
-            잡곡을 깨끗하게 씻고 물에 30분 정도 불려 물을 1:1로 하여 밥이 끓으면 약한 불로 줄이고
-            뜸을 들여 고슬고슬한 밥을 지어 한입 크기로 뭉쳐놓는다.
-          </p>
+
+        <div className='px-2'>
+          <p>{recipe.MANUAL01}</p>
         </div>
-      </div>
+      </section>
     </div>
   );
 }

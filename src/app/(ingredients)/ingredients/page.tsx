@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Background5 from '../../../../public/assets/images/Background5.jpg';
 import Fridge_open from '../../../../public/assets/images/Fridge_open.png';
-import IngredientList from '@/app/components/IngredientList';
+import IngredientListModal from '@/app/components/IngredientListModal';
 
 export default function IngredientsPage() {
   return (
@@ -26,7 +26,7 @@ export default function IngredientsPage() {
         />
 
         {/* 재료 리스트 모달 */}
-        <IngredientList />
+        <IngredientListModal />
       </div>
     </>
   );

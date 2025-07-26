@@ -1,55 +1,74 @@
 'use client';
 
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import fallback from '../../../../public/fallback.png';
+
+interface Recipe {
+  RCP_NM: string;
+  RCP_PARTS_DTLS: string;
+  ATT_FILE_NO_MAIN: string;
+}
 
 export default function RecipesPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
+
+  useEffect(() => {
+    const query = searchParams.get('selected'); // 예: '김치,두부'
+    if (!query) return;
+
+    const ingredients = query.split(',');
+
+    const fetchRecipes = async () => {
+      const res = await fetch('/api/recipes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ingredients }),
+      });
+
+      const data = await res.json();
+      setRecipes(data.recipes || []);
+    };
+
+    fetchRecipes();
+    console.log('레세피 api fetch');
+  }, [searchParams]);
 
   const goToDetail = (menu: string) => {
     router.push(`/recipes/detail/${encodeURIComponent(menu)}`);
   };
 
-  // api 데이터로 대체 예정
-  const list = [
-    { pic: 'food1.png', menu: '저염 간장을 이용한 닭게장 비빔밥' },
-    { pic: 'food2.png', menu: '순두부 찌개' },
-    { pic: 'food3.png', menu: '해물 채소장을 넣은 곰취 쌈밥' },
-    {
-      pic: 'food4.png',
-      menu: '유자골드레싱을 곁들인 곤드레 단호박 크로켓 샐러드',
-    },
-    {
-      pic: 'food4.png',
-      menu: '유자골드레싱을 곁들인 곤드레 단호박 크로켓 샐러드1',
-    },
-    {
-      pic: 'food4.png',
-      menu: '유자골드레싱을 곁들인 곤드레 단호박 크로켓 샐러드2',
-    },
-  ];
   return (
-    <div className='w-96 flex justify-between items-start flex-wrap p-4'>
-      {list.map((a) => (
-        <div
-          className='h-52 basis-40 grow-0 shrink-0 border border-gray-400 border-solid mb-6 rounded-lg cursor-pointer'
-          key={a.menu}
-          onClick={() => goToDetail(a.menu)}
-        >
-          <div className='p-5 pb-2'>
-            <Image
-              className='h-28 rounded-xl'
-              src={`/${a.pic}`}
-              alt={a.menu}
-              width={120}
-              height={50}
-            />
+    <div className='p-4 relative w-[393px] h-[756px] overflow-y-auto'>
+      <div>
+        {recipes.length === 0 ? (
+          <p className='text-sm'>레시피들을 불러오는중...</p>
+        ) : (
+          <div className='grid grid-cols-2 gap-4'>
+            {recipes.map((recipe, idx) => (
+              <div
+                key={idx}
+                onClick={() => goToDetail(recipe.RCP_NM)}
+                className='border border-gray-300 rounded-lg overflow-hidden shadow hover:scale-105 transition cursor-pointer'
+              >
+                <Image
+                  src={recipe.ATT_FILE_NO_MAIN || fallback}
+                  alt={recipe.RCP_NM}
+                  width={300}
+                  height={200}
+                  className='w-full h-28 object-cover'
+                />
+                <div className='p-2 text-sm text-center font-medium'>
+                  {recipe.RCP_NM}
+                </div>
+              </div>
+            ))}
           </div>
-          <div className='pl-5 pr-5 text-center text-xs'>
-            <p>{a.menu}</p>
-          </div>
-        </div>
-      ))}
+        )}
+      </div>
     </div>
   );
 }
