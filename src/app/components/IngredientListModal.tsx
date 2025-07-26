@@ -1,12 +1,10 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
-
-const Ingredients = ['다진 마늘', '우유', '계란', '김치', '두부', '목살'];
 
 export default function IngredientListModal() {
   const router = useRouter();
@@ -16,6 +14,7 @@ export default function IngredientListModal() {
   };
 
   const [selectedIngredients, setSelectedIngredients] = useState<string[]>([]);
+  const [ingredients, setIngredients] = useState<string[]>([]);
 
   const toggleIngredient = (ingredient: string) => {
     const isSelected = selectedIngredients.includes(ingredient);
@@ -33,6 +32,21 @@ export default function IngredientListModal() {
       setSelectedIngredients((prev) => [...prev, ingredient]);
     }
   };
+
+  //로컬스토리지에 있는, 즉 내 냉장고에 있는 재료들 목록 가져오기
+  useEffect(() => {
+    const stored = localStorage.getItem('Ingredients');
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed)) {
+          setIngredients(parsed);
+        }
+      } catch (e) {
+        console.error('로컬스토리지 재료 리스트 파싱 에러', e);
+      }
+    }
+  }, []);
 
   return (
     <motion.div
@@ -52,7 +66,7 @@ export default function IngredientListModal() {
 
           <div className='text-[13px]'>
             <ul>
-              {Ingredients.map((item, idx) => (
+              {ingredients.map((item, idx) => (
                 <div key={idx} className='flex mb-1.5'>
                   <input
                     type='checkbox'
