@@ -42,7 +42,7 @@ export default function RecipesPage() {
   };
 
   return (
-    <div className='p-4 relative w-[393px] h-[756px] overflow-y-auto'>
+    <div className='p-4 relative w-[393px] h-[756px] overflow-y-scroll [&::-webkit-scrollbar]:hidden'>
       <div>
         {recipes.length === 0 ? (
           <p className='text-sm'>레시피들을 불러오는중...</p>
@@ -61,9 +61,7 @@ export default function RecipesPage() {
                   height={200}
                   className='w-full h-28 object-cover'
                 />
-                <div className='p-2 text-sm text-center font-medium'>
-                  {recipe.RCP_NM}
-                </div>
+                <div className='p-2 text-sm text-center font-medium'>{recipe.RCP_NM}</div>
               </div>
             ))}
           </div>
