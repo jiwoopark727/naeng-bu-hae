@@ -4,13 +4,11 @@ const API_KEY = process.env.RECIPES_API_KEY;
 const API_URL = 'http://openapi.foodsafetykorea.go.kr/api';
 
 export async function POST(req: NextRequest) {
-  const { ingredients } = await req.json(); // ['김치', '두부']
+  const { ingredients, page = 1 } = await req.json(); // ['김치', '두부'], page도 같이 받아옴
+  const PAGE_SIZE = 10;
 
   if (!ingredients || !Array.isArray(ingredients)) {
-    return NextResponse.json(
-      { error: '재료 배열이 필요합니다.' },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: '재료 배열이 필요합니다.' }, { status: 400 });
   }
 
   const start = 1;
@@ -29,12 +27,17 @@ export async function POST(req: NextRequest) {
       ingredients.every((ing: string) => recipe.RCP_PARTS_DTLS?.includes(ing))
     );
 
-    return NextResponse.json({ recipes: filtered.slice(0, 12) }); // 12개만 반환
+    // 몇 개씩 보여줄 지 정하는 코드
+    const startIdx = (page - 1) * PAGE_SIZE;
+    const paginated = filtered.slice(startIdx, startIdx + PAGE_SIZE);
+
+    // return NextResponse.json({ recipes: filtered.slice(0, 12) }); // 12개만 반환
+    return NextResponse.json({
+      recipes: paginated,
+      hasMore: startIdx + PAGE_SIZE < filtered.length,
+    });
   } catch (err) {
     console.error('레시피 API 오류:', err);
-    return NextResponse.json(
-      { error: '레시피를 불러오지 못했습니다.' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: '레시피를 불러오지 못했습니다.' }, { status: 500 });
   }
 }
