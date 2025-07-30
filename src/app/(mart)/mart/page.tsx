@@ -4,8 +4,10 @@ import Image from 'next/image';
 import MartBackground from '../../../../public/assets/images/MartBackground1.jpg';
 import CartWoman from '../../../../public/assets/images/CartWoman.png';
 import { useEffect, useState } from 'react';
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { faAngleLeft, faAngleRight, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 // 임시 구매 가능한 재료
 // const availableItems = ['양파', '계란', '감자', '마늘', '토마토', '마라', '버섯'];
@@ -46,10 +48,16 @@ const availableItems = [
   { category: '기타', name: '떡' },
 ];
 
+const ItemCategory = ['채소', '육류', '해산물', '유제품', '양념', '기타'];
+
 export default function MartPage() {
   const [ingredients, setIngredients] = useState<string[]>([]);
   const [cart, setCart] = useState<Set<string>>(new Set());
   const [showModal, setShowModal] = useState(false);
+  const [index, setIndex] = useState(0);
+  const [cate, setCate] = useState(ItemCategory[0]);
+
+  const filteredItems = availableItems.filter((item) => item.category === cate);
 
   // localStorage에서 불러오기
   useEffect(() => {
@@ -99,6 +107,22 @@ export default function MartPage() {
     alert('냉장고에 재료가 추가되었습니다.');
   };
 
+  const prevCategory = () => {
+    setIndex((prev) => {
+      const newIndex = prev === 0 ? ItemCategory.length - 1 : prev - 1;
+      setCate(ItemCategory[newIndex]);
+      return newIndex;
+    });
+  };
+
+  const nextCategory = () => {
+    setIndex((prev) => {
+      const newIndex = prev === ItemCategory.length - 1 ? 0 : prev + 1;
+      setCate(ItemCategory[newIndex]);
+      return newIndex;
+    });
+  };
+
   return (
     <div className='relative w-full h-full'>
       {/* 배경 및 캐릭터 이미지 */}
@@ -119,8 +143,8 @@ export default function MartPage() {
 
       {/* 재료 리스트(슬라이드로 바꿔야됨) */}
       {/* 딱 카트 끄는 아줌마 바로 위까지 */}
-      <div className='absolute w-[95%] h-[35%] top-2.5 left-2.5 p-4 rounded shadow-md bg-[#ffffff9f]'>
-        <h3 className='flex justify-center mb-2 font-bold'>마트 재료 목록</h3>
+      <div className='absolute w-[95%] h-[45%] top-2.5 left-2.5 p-4 rounded shadow-md bg-[#ffffff9f] '>
+        <h3 className='flex justify-center mb-5 font-bold'>마트 재료 목록</h3>
         {/* <div className='relative flex justify-center'>
           <input
             type='text'
@@ -132,17 +156,38 @@ export default function MartPage() {
             className='w-3 h-3 absolute right-17 bottom-5'
           />
         </div> */}
-        {availableItems.map((item) => (
-          <div key={item.name} className='flex items-center space-x-2'>
-            <input
-              type='checkbox'
-              checked={cart.has(item.name)}
-              onChange={() => toggleCartItem(item.name)}
-              className='w-4 h-4 accent-blue-500 mr-1.5'
-            />
-            <span>{item.name}</span>
-          </div>
-        ))}
+        <div className='flex justify-between mb-2'>
+          <button
+            type='button'
+            className='cursor-pointer text-gray-600 hover:text-gray-900'
+            aria-label='이전 카테고리'
+            onClick={prevCategory}
+          >
+            <FontAwesomeIcon icon={faAngleLeft} className='w-5 h-5' />
+          </button>
+          <span>{cate}</span>
+          <button
+            type='button'
+            className='cursor-pointer text-gray-600 hover:text-gray-900'
+            aria-label='다음 카테고리'
+            onClick={nextCategory}
+          >
+            <FontAwesomeIcon icon={faAngleRight} className='w-5 h-5' />
+          </button>
+        </div>
+        <div className='max-h-[250px] overflow-y-scroll [&::-webkit-scrollbar]:hidden'>
+          {filteredItems.map((item) => (
+            <div key={item.name} className='flex items-center space-x-2'>
+              <input
+                type='checkbox'
+                checked={cart.has(item.name)}
+                onChange={() => toggleCartItem(item.name)}
+                className='w-4 h-4 accent-blue-500 mr-1.5'
+              />
+              <span>{item.name}</span>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* 장바구니 수량 */}
