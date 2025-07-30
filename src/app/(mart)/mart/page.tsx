@@ -4,16 +4,46 @@ import Image from 'next/image';
 import MartBackground from '../../../../public/assets/images/MartBackground1.jpg';
 import CartWoman from '../../../../public/assets/images/CartWoman.png';
 import { useEffect, useState } from 'react';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // 임시 구매 가능한 재료
+// const availableItems = ['양파', '계란', '감자', '마늘', '토마토', '마라', '버섯'];
 const availableItems = [
-  '양파',
-  '계란',
-  '감자',
-  '마늘',
-  '토마토',
-  '마라',
-  '버섯',
+  { category: '채소', name: '양파' },
+  { category: '채소', name: '대파' },
+  { category: '채소', name: '당근' },
+  { category: '채소', name: '마늘' },
+  { category: '채소', name: '감자' },
+
+  { category: '육류', name: '소고기' },
+  { category: '육류', name: '돼지고기' },
+  { category: '육류', name: '닭고기' },
+  { category: '육류', name: '스팸' },
+  { category: '육류', name: '베이컨' },
+
+  { category: '해산물', name: '오징어' },
+  { category: '해산물', name: '새우' },
+  { category: '해산물', name: '참치' },
+  { category: '해산물', name: '홍합' },
+
+  { category: '유제품', name: '치즈' },
+  { category: '유제품', name: '버터' },
+  { category: '유제품', name: '우유' },
+
+  { category: '양념', name: '간장' },
+  { category: '양념', name: '고추장' },
+  { category: '양념', name: '된장' },
+  { category: '양념', name: '소금' },
+  { category: '양념', name: '설탕' },
+  { category: '양념', name: '참기름' },
+  { category: '양념', name: '식초' },
+  { category: '양념', name: '후추' },
+
+  { category: '기타', name: '라면' },
+  { category: '기타', name: '밥' },
+  { category: '기타', name: '계란' },
+  { category: '기타', name: '떡' },
 ];
 
 export default function MartPage() {
@@ -89,17 +119,28 @@ export default function MartPage() {
 
       {/* 재료 리스트(슬라이드로 바꿔야됨) */}
       {/* 딱 카트 끄는 아줌마 바로 위까지 */}
-      <div className='absolute w-full h-[55%] top-0 left-0 p-4 rounded shadow-md'>
+      <div className='absolute w-[95%] h-[35%] top-2.5 left-2.5 p-4 rounded shadow-md bg-[#ffffff9f]'>
         <h3 className='flex justify-center mb-2 font-bold'>마트 재료 목록</h3>
+        {/* <div className='relative flex justify-center'>
+          <input
+            type='text'
+            placeholder='재료 검색'
+            className='w-52 border-b border-[#000] text-xs mb-4'
+          />
+          <FontAwesomeIcon
+            icon={faMagnifyingGlass}
+            className='w-3 h-3 absolute right-17 bottom-5'
+          />
+        </div> */}
         {availableItems.map((item) => (
-          <div key={item} className='flex items-center space-x-2'>
+          <div key={item.name} className='flex items-center space-x-2'>
             <input
               type='checkbox'
-              checked={cart.has(item)}
-              onChange={() => toggleCartItem(item)}
+              checked={cart.has(item.name)}
+              onChange={() => toggleCartItem(item.name)}
               className='w-4 h-4 accent-blue-500 mr-1.5'
             />
-            <span>{item}</span>
+            <span>{item.name}</span>
           </div>
         ))}
       </div>
