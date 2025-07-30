@@ -6,8 +6,6 @@ import CartWoman from '../../../../public/assets/images/CartWoman.png';
 import { useEffect, useState } from 'react';
 import { faAngleLeft, faAngleRight, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { AnimatePresence } from 'framer-motion';
-import { motion } from 'framer-motion';
 
 // 임시 구매 가능한 재료
 // const availableItems = ['양파', '계란', '감자', '마늘', '토마토', '마라', '버섯'];
