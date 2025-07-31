@@ -65,18 +65,18 @@ export default function IngredientListModal() {
           </span>
 
           <div className='text-[13px]'>
-            <ul>
+            <ul className='grid grid-cols-3 gap-x-3 gap-y-2'>
               {ingredients.map((item, idx) => (
-                <div key={idx} className='flex mb-1.5'>
+                <li key={idx} className='flex items-center'>
                   <input
                     type='checkbox'
                     id={item}
                     onChange={() => toggleIngredient(item)}
                     checked={selectedIngredients.includes(item)}
-                    className='w-4 h-4 translate-y-0.5 accent-blue-500 mr-1.5'
+                    className='w-4 h-4 accent-blue-500 mr-1.5'
                   />
-                  <li>{item}</li>
-                </div>
+                  <label htmlFor={item}>{item}</label>
+                </li>
               ))}
             </ul>
           </div>
