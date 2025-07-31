@@ -10,7 +10,7 @@ export default function IngredientListModal() {
   const router = useRouter();
 
   const handleXclick = () => {
-    router.back();
+    router.push('/');
   };
 
   const [selectedIngredients, setSelectedIngredients] = useState<string[]>([]);

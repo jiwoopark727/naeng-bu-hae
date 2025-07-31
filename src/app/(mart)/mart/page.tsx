@@ -4,11 +4,15 @@ import Image from 'next/image';
 import MartBackground from '../../../../public/assets/images/MartBackground1.jpg';
 import CartWoman from '../../../../public/assets/images/CartWoman.png';
 import { useEffect, useState } from 'react';
-import { faAngleLeft, faAngleRight, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import {
+  faAngleLeft,
+  faAngleRight,
+  faMagnifyingGlass,
+  faXmark,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // 임시 구매 가능한 재료
-// const availableItems = ['양파', '계란', '감자', '마늘', '토마토', '마라', '버섯'];
 const availableItems = [
   { category: '채소', name: '양파' },
   { category: '채소', name: '대파' },
@@ -54,8 +58,11 @@ export default function MartPage() {
   const [showModal, setShowModal] = useState(false);
   const [index, setIndex] = useState(0);
   const [cate, setCate] = useState(ItemCategory[0]);
+  const [keyword, setKeyword] = useState<string>('');
+  const [search, setSearch] = useState<boolean>(false);
 
   const filteredItems = availableItems.filter((item) => item.category === cate);
+  const searchedItems = availableItems.filter((item) => item.name === keyword);
 
   // localStorage에서 불러오기
   useEffect(() => {
@@ -84,6 +91,7 @@ export default function MartPage() {
     });
   };
 
+  //구매 버튼 함수
   const handleBuyButton = () => {
     const newItems = [...ingredients];
     let updated = false;
@@ -121,6 +129,24 @@ export default function MartPage() {
     });
   };
 
+  // 검색 입력 값 keyword state 변수 onChange 설정
+  const handleInputKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setKeyword(e.target.value);
+    setSearch(false);
+  };
+
+  //검색 버튼 눌렀을 때 동작하는 함수
+  const handleSearchButton = () => {
+    setSearch(true);
+    setCate(searchedItems[0].category);
+  };
+
+  // 돋보기 옆 x버튼 클릭시 input value 초기화 검색상태도 false
+  const handleXbutton = () => {
+    setKeyword('');
+    setSearch(false);
+  };
+
   return (
     <div className='relative w-full h-full'>
       {/* 배경 및 캐릭터 이미지 */}
@@ -141,19 +167,35 @@ export default function MartPage() {
 
       {/* 재료 리스트(슬라이드로 바꿔야됨) */}
       {/* 딱 카트 끄는 아줌마 바로 위까지 */}
-      <div className='absolute w-[95%] h-[45%] top-2.5 left-2.5 p-4 rounded shadow-md bg-[#ffffff9f] '>
+      <div className='absolute w-[95%] h-[55%] top-2.5 left-2.5 p-4 rounded shadow-md bg-[#ffffff9f] '>
         <h3 className='flex justify-center mb-5 font-bold'>마트 재료 목록</h3>
-        {/* <div className='relative flex justify-center'>
+
+        {/* 검색창 */}
+        <div className='relative flex justify-center'>
           <input
             type='text'
             placeholder='재료 검색'
-            className='w-52 border-b border-[#000] text-xs mb-4'
+            value={keyword}
+            onChange={handleInputKeyword}
+            className='w-52 border-b border-[#000] text-sm mb-4 p-0.5'
           />
+          {/* x 버튼 검색어 지우는 */}
+          <span>
+            <FontAwesomeIcon
+              icon={faXmark}
+              className='text-xs absolute right-23 bottom-5.5 cursor-pointer'
+              onClick={handleXbutton}
+            ></FontAwesomeIcon>
+          </span>
+          {/* 돋보기(검색 버튼) */}
           <FontAwesomeIcon
             icon={faMagnifyingGlass}
-            className='w-3 h-3 absolute right-17 bottom-5'
+            className='absolute right-17 bottom-5 cursor-pointer'
+            onClick={handleSearchButton}
           />
-        </div> */}
+        </div>
+
+        {/* 슬라이드 좌우 버튼 + 카테고리 이름 */}
         <div className='flex justify-between mb-2'>
           <button
             type='button'
@@ -173,18 +215,32 @@ export default function MartPage() {
             <FontAwesomeIcon icon={faAngleRight} className='w-5 h-5' />
           </button>
         </div>
+
+        {/* 재료 목록들 */}
         <div className='max-h-[250px] overflow-y-scroll [&::-webkit-scrollbar]:hidden'>
-          {filteredItems.map((item) => (
-            <div key={item.name} className='flex items-center space-x-2'>
-              <input
-                type='checkbox'
-                checked={cart.has(item.name)}
-                onChange={() => toggleCartItem(item.name)}
-                className='w-4 h-4 accent-blue-500 mr-1.5'
-              />
-              <span>{item.name}</span>
-            </div>
-          ))}
+          {search
+            ? searchedItems.map((item) => (
+                <div key={item.name} className='flex items-center space-x-2'>
+                  <input
+                    type='checkbox'
+                    checked={cart.has(item.name)}
+                    onChange={() => toggleCartItem(item.name)}
+                    className='w-4 h-4 accent-blue-500 mr-1.5'
+                  />
+                  <span>{item.name}</span>
+                </div>
+              ))
+            : filteredItems.map((item) => (
+                <div key={item.name} className='flex items-center space-x-2'>
+                  <input
+                    type='checkbox'
+                    checked={cart.has(item.name)}
+                    onChange={() => toggleCartItem(item.name)}
+                    className='w-4 h-4 accent-blue-500 mr-1.5'
+                  />
+                  <span>{item.name}</span>
+                </div>
+              ))}
         </div>
       </div>
 
