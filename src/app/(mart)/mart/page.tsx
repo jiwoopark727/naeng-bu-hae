@@ -250,8 +250,13 @@ export default function MartPage() {
   };
 
   // 돋보기 옆 x버튼 클릭시 input value 초기화 검색상태도 false
-  const handleXbutton = () => {
+  const handleXButton = () => {
     setKeyword('');
+    setSearch(false);
+  };
+
+  // 검색을 이미 했고 그리고 슬라이드 좌우 버튼을 눌럿을때
+  const handleSlideButton = () => {
     setSearch(false);
   };
 
@@ -292,7 +297,7 @@ export default function MartPage() {
             <FontAwesomeIcon
               icon={faXmark}
               className='text-xs absolute right-23 bottom-5.5 cursor-pointer'
-              onClick={handleXbutton}
+              onClick={handleXButton}
             ></FontAwesomeIcon>
           </span>
           {/* 돋보기(검색 버튼) */}
@@ -309,7 +314,10 @@ export default function MartPage() {
             type='button'
             className='cursor-pointer text-gray-600 hover:text-gray-900'
             aria-label='이전 카테고리'
-            onClick={prevCategory}
+            onClick={() => {
+              prevCategory();
+              handleSlideButton();
+            }}
           >
             <FontAwesomeIcon icon={faAngleLeft} className='w-5 h-5' />
           </button>
@@ -318,7 +326,10 @@ export default function MartPage() {
             type='button'
             className='cursor-pointer text-gray-600 hover:text-gray-900'
             aria-label='다음 카테고리'
-            onClick={nextCategory}
+            onClick={() => {
+              nextCategory();
+              handleSlideButton();
+            }}
           >
             <FontAwesomeIcon icon={faAngleRight} className='w-5 h-5' />
           </button>
