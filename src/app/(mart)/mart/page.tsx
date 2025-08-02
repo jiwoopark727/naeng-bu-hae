@@ -12,6 +12,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { availableItems } from '@/app/data/availableItems';
+import CartModal from '@/app/components/CartModal';
 
 const ItemCategory = ['채소', '육류', '해산물', '유제품', '양념', '기타'];
 
@@ -45,6 +46,7 @@ export default function MartPage() {
     }
   }, []);
 
+  //재료 옆 체크박스(장바구니 담기,취소하기 체크박스)
   const toggleCartItem = (item: string) => {
     setCart((prev) => {
       const newCart = new Set(prev);
@@ -236,28 +238,12 @@ export default function MartPage() {
       </div>
 
       {/* 장바구니 모달 */}
-      {showModal && (
-        <div className='absolute left-52 bottom-58  flex justify-center items-center z-50'>
-          <div className='bg-white w-[170px] p-6 rounded shadow-lg'>
-            <h2 className='text-md font-bold mb-4'>🛒 장바구니</h2>
-            {Array.from(cart).length > 0 ? (
-              <ul className='list-disc pl-4'>
-                {Array.from(cart).map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            ) : (
-              <p>장바구니에 담긴 재료가 없습니다.</p>
-            )}
-            <button
-              className='mt-4 px-4 py-2 bg-red-500 text-white rounded-[12px] cursor-pointer'
-              onClick={() => setShowModal(false)}
-            >
-              닫기
-            </button>
-          </div>
-        </div>
-      )}
+      <CartModal
+        cart={cart}
+        setCart={setCart}
+        showModal={showModal}
+        setShowModal={setShowModal}
+      />
 
       {/* 구매하기 버튼 */}
       <div
