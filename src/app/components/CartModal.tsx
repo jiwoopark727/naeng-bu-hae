@@ -23,7 +23,7 @@ const CartModal: React.FC<CartModalProps> = ({
   };
 
   return (
-    <div className='absolute left-35 bottom-55 flex justify-center items-center z-50'>
+    <div className='absolute left-35 bottom-54 flex justify-center items-center z-50'>
       <div className='bg-white w-[240px] p-6 rounded shadow-lg'>
         <h2 className='text-md font-bold mb-4'>🛒 장바구니</h2>
         {Array.from(cart).length > 0 ? (
