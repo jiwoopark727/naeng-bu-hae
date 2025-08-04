@@ -147,7 +147,7 @@ export default function MartPage() {
 
       {/* 재료 리스트(슬라이드로 바꿔야됨) */}
       {/* 딱 카트 끄는 아줌마 바로 위까지 */}
-      <div className='absolute w-[95%] h-[53%] top-2.5 left-2.5 p-4 rounded shadow-md bg-[#ffffff9f] '>
+      <div className='absolute inset-x-2 top-2 md:left-2.5 md:top-2.5 w-[calc(100%-1rem)] md:w-[95%] h-[60%] md:h-[53%] p-4 rounded shadow-md bg-[#ffffffcc]'>
         <h3 className='flex justify-center mb-5 font-bold'>마트 재료 목록</h3>
 
         {/* 검색창 */}
@@ -158,7 +158,7 @@ export default function MartPage() {
             value={keyword}
             onChange={handleInputKeyword}
             onKeyDown={handleInputKeydown}
-            className='w-52 border-b border-[#000] text-sm mb-4 p-0.5 focus:outline-none focus:ring-0'
+            className='w-full max-w-[13rem] border-b border-[#000] text-sm mb-4 p-0.5 focus:outline-none focus:ring-0'
           />
           {/* x 버튼 검색어 지우는 */}
           <span>
@@ -204,8 +204,8 @@ export default function MartPage() {
         </div>
 
         {/* 재료 목록들 */}
-        <div className='max-h-[250px] overflow-y-scroll [&::-webkit-scrollbar]:hidden text-[11px] mt-5'>
-          <ul className='grid grid-cols-3 gap-x-3 gap-y-2'>
+        <div className='max-h-[28vh] overflow-y-scroll text-[11px] mt-5 [&::-webkit-scrollbar]:hidden'>
+          <ul className='grid grid-cols-2 sm:grid-cols-3 gap-x-3 gap-y-2'>
             {search
               ? searchedItems.map((item) => (
                   <li
@@ -258,7 +258,12 @@ export default function MartPage() {
       </div>
 
       {/* 장바구니 모달 */}
-      <CartModal cart={cart} setCart={setCart} showModal={showModal} setShowModal={setShowModal} />
+      <CartModal
+        cart={cart}
+        setCart={setCart}
+        showModal={showModal}
+        setShowModal={setShowModal}
+      />
 
       {/* 구매하기 버튼 */}
       <div
