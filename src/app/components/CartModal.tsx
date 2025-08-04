@@ -7,12 +7,7 @@ interface CartModalProps {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const CartModal: React.FC<CartModalProps> = ({
-  cart,
-  setCart,
-  showModal,
-  setShowModal,
-}) => {
+const CartModal: React.FC<CartModalProps> = ({ cart, setCart, showModal, setShowModal }) => {
   if (!showModal) return null;
 
   const removeFromCart = (itemToRemove: string) => {
@@ -32,7 +27,7 @@ const CartModal: React.FC<CartModalProps> = ({
               <li key={item} className='flex justify-between items-center'>
                 <span>{item}</span>
                 <button
-                  className='ml-2 text-xs text-red-500 hover:underline'
+                  className='ml-2 text-xs text-red-500 hover:underline cursor-pointer'
                   onClick={() => removeFromCart(item)}
                 >
                   제거
