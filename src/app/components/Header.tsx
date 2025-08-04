@@ -30,14 +30,14 @@ export default function Header() {
         {pathname === '/mart' ? (
           <span
             onClick={handleHomeClick}
-            className='text-sm font-semibold cursor-pointer transition-all duration-300 hover:text-blue-400 translate-y-[2px] hover:translate-x-[5px]'
+            className='text-sm font-semibold cursor-pointer transition-all duration-300 hover:text-blue-400 hover:translate-x-[5px]'
           >
             집 가기 ➡️
           </span>
         ) : (
           <span
             onClick={handleMartClick}
-            className='text-sm font-semibold cursor-pointer transition-all duration-300 hover:text-blue-400 translate-y-[2px] hover:translate-x-[5px]'
+            className='text-sm font-semibold cursor-pointer transition-all duration-300 hover:text-blue-400 hover:translate-x-[5px]'
           >
             마트 가기 ➡️
           </span>
