@@ -20,9 +20,9 @@ export default function IngredientsPage() {
         <Image
           src={Fridge_open}
           alt='Fridge'
-          width={260}
+          width={210}
           height={200}
-          className='absolute top-10 left-3 z-10 cursor-pointer'
+          className='absolute top-5 left-39 z-10 cursor-pointer'
         />
 
         {/* 재료 리스트 모달 */}

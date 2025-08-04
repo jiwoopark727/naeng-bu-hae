@@ -57,20 +57,20 @@ export default function DetailPage({ params }: Props) {
         }
 
         setStep(manualSteps);
-
-        console.log(manualSteps);
       } catch (err) {
         console.error(err);
       }
     };
 
     fetchRecipeDetail(menu);
-    console.log('레시피 디테일 api fetch');
   }, [menu]);
 
-  console.log(recipe);
-  console.log(step);
-  if (!recipe) return <p className='p-4'>{menu} 레시피를 불러오는 중...</p>;
+  if (!recipe)
+    return (
+      <div className='w-full h-10 flex justify-center items-center'>
+        <span className='text-sm text-gray-400'>{menu} 불러오는 중...</span>
+      </div>
+    );
 
   return (
     <div className='relative w-[393px] h-[756px] flex flex-col px-4 py-2 overflow-y-scroll [&::-webkit-scrollbar]:hidden'>

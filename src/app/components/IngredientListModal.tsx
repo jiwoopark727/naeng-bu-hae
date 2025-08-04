@@ -50,10 +50,10 @@ export default function IngredientListModal() {
 
   return (
     <motion.div
-      className='absolute top-50 right-5 z-20 text-md text-black w-70 h-130 bg-white rounded-[15px] opacity-95 p-4'
-      initial={{ opacity: 0, scale: 0.9, x: -50, y: -140 }}
+      className='absolute top-25 left-12 z-20 text-md text-black w-70 h-100 bg-white rounded-[15px] opacity-95 p-4'
+      initial={{ opacity: 0, scale: 0.9, x: 30, y: -120 }}
       animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
-      transition={{ duration: 0.25, ease: 'easeOut' }}
+      transition={{ duration: 0.4, ease: 'easeOut' }}
     >
       <div className='h-full'>
         <div className='relative w-full h-full'>

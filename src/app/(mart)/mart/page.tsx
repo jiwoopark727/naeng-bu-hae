@@ -103,10 +103,17 @@ export default function MartPage() {
     setSearch(false);
   };
 
-  //검색 버튼 눌렀을 때 동작하는 함수
+  // 검색 버튼 눌렀을 때 동작하는 함수
   const handleSearchButton = () => {
     setSearch(true);
     setCate(searchedItems[0].category);
+  };
+
+  // 검색 입력 창에서 엔터 눌렀을 때 검색이 되도록 하는 함수
+  const handleInputKeydown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSearchButton();
+    }
   };
 
   // 돋보기 옆 x버튼 클릭시 input value 초기화 검색상태도 false
@@ -140,7 +147,7 @@ export default function MartPage() {
 
       {/* 재료 리스트(슬라이드로 바꿔야됨) */}
       {/* 딱 카트 끄는 아줌마 바로 위까지 */}
-      <div className='absolute w-[95%] h-[53%] top-2.5 left-2.5 p-4 rounded shadow-md bg-[#ffffff9f] '>
+      <div className='absolute inset-x-2 top-2 md:left-2.5 md:top-2.5 w-[calc(100%-1rem)] md:w-[95%] h-[60%] md:h-[53%] p-4 rounded shadow-md bg-[#ffffffcc]'>
         <h3 className='flex justify-center mb-5 font-bold'>마트 재료 목록</h3>
 
         {/* 검색창 */}
@@ -150,7 +157,8 @@ export default function MartPage() {
             placeholder='재료 검색'
             value={keyword}
             onChange={handleInputKeyword}
-            className='w-52 border-b border-[#000] text-sm mb-4 p-0.5'
+            onKeyDown={handleInputKeydown}
+            className='w-full max-w-[13rem] border-b border-[#000] text-sm mb-4 p-0.5 focus:outline-none focus:ring-0'
           />
           {/* x 버튼 검색어 지우는 */}
           <span>
@@ -196,32 +204,44 @@ export default function MartPage() {
         </div>
 
         {/* 재료 목록들 */}
-        <div className='max-h-[250px] overflow-y-scroll [&::-webkit-scrollbar]:hidden text-[11px] mt-5'>
-          <ul className='grid grid-cols-3 gap-x-3 gap-y-2'>
+        <div className='max-h-[28vh] overflow-y-scroll text-[11px] mt-5 [&::-webkit-scrollbar]:hidden'>
+          <ul className='grid grid-cols-2 sm:grid-cols-3 gap-x-3 gap-y-2'>
             {search
               ? searchedItems.map((item) => (
-                  <li key={item.name} className='flex items-center'>
-                    <div className='flex items-center space-x-2'>
+                  <li
+                    key={item.name}
+                    className='flex items-center cursor-pointer'
+                    onClick={() => toggleCartItem(item.name)}
+                  >
+                    <div className='flex items-center space-x-2 cursor-pointer'>
                       <input
                         type='checkbox'
                         checked={cart.has(item.name)}
-                        onChange={() => toggleCartItem(item.name)}
-                        className='w-4 h-4 accent-blue-500 mr-1.5'
+                        onChange={(e) => e.stopPropagation()} // 중복 실행 방지
+                        className='w-4 h-4 accent-blue-500 mr-1.5 cursor-pointer'
                       />
-                      <label htmlFor={item.name}>{item.name}</label>
+                      <label htmlFor={item.name} className='cursor-pointer'>
+                        {item.name}
+                      </label>
                     </div>
                   </li>
                 ))
               : filteredItems.map((item) => (
-                  <li key={item.name} className='flex items-center'>
-                    <div className='flex items-center space-x-2'>
+                  <li
+                    key={item.name}
+                    className='flex items-center cursor-pointer'
+                    onClick={() => toggleCartItem(item.name)}
+                  >
+                    <div className='flex items-center space-x-2 cursor-pointer'>
                       <input
                         type='checkbox'
                         checked={cart.has(item.name)}
-                        onChange={() => toggleCartItem(item.name)}
-                        className='w-4 h-4 accent-blue-500 mr-1.5'
+                        onChange={(e) => e.stopPropagation()}
+                        className='w-4 h-4 accent-blue-500 mr-1.5 cursor-pointer'
                       />
-                      <label htmlFor={item.name}>{item.name}</label>
+                      <label htmlFor={item.name} className='cursor-pointer'>
+                        {item.name}
+                      </label>
                     </div>
                   </li>
                 ))}
@@ -231,7 +251,7 @@ export default function MartPage() {
 
       {/* 장바구니 수량 */}
       <div
-        onClick={() => setShowModal(true)}
+        onClick={() => setShowModal(!showModal)}
         className='absolute bottom-32 right-23 bg-[#f43c3c] w-16 h-16 rounded-[50%] cursor-pointer flex justify-center items-center text-white'
       >
         <p>{cart.size}</p>
