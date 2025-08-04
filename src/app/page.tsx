@@ -30,11 +30,11 @@ export default function Home() {
           alt='Fridge'
           width={120}
           height={200}
-          className='absolute top-20 left-5 z-10 cursor-pointer'
+          className='absolute top-3 left-40 z-10 cursor-pointer'
           onClick={handleFridgeClick}
         />
-        <div className='absolute top-70 right-15 z-20 font-semibold text-md animate-pulse duration-300 text-black'>
-          👈 냉장고를 터치하세요!!
+        <div className='absolute top-30 left-5 z-20 font-semibold text-sm animate-pulse duration-300 text-black'>
+          냉장고를 터치해!! 👉
         </div>
       </div>
     </>
