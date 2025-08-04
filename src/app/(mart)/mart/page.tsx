@@ -231,7 +231,7 @@ export default function MartPage() {
 
       {/* 장바구니 수량 */}
       <div
-        onClick={() => setShowModal(true)}
+        onClick={() => setShowModal(!showModal)}
         className='absolute bottom-32 right-23 bg-[#f43c3c] w-16 h-16 rounded-[50%] cursor-pointer flex justify-center items-center text-white'
       >
         <p>{cart.size}</p>
