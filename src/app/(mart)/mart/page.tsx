@@ -103,10 +103,17 @@ export default function MartPage() {
     setSearch(false);
   };
 
-  //검색 버튼 눌렀을 때 동작하는 함수
+  // 검색 버튼 눌렀을 때 동작하는 함수
   const handleSearchButton = () => {
     setSearch(true);
     setCate(searchedItems[0].category);
+  };
+
+  // 검색 입력 창에서 엔터 눌렀을 때 검색이 되도록 하는 함수
+  const handleInputKeydown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSearchButton();
+    }
   };
 
   // 돋보기 옆 x버튼 클릭시 input value 초기화 검색상태도 false
@@ -150,7 +157,8 @@ export default function MartPage() {
             placeholder='재료 검색'
             value={keyword}
             onChange={handleInputKeyword}
-            className='w-52 border-b border-[#000] text-sm mb-4 p-0.5'
+            onKeyDown={handleInputKeydown}
+            className='w-52 border-b border-[#000] text-sm mb-4 p-0.5 focus:outline-none focus:ring-0'
           />
           {/* x 버튼 검색어 지우는 */}
           <span>
@@ -250,12 +258,7 @@ export default function MartPage() {
       </div>
 
       {/* 장바구니 모달 */}
-      <CartModal
-        cart={cart}
-        setCart={setCart}
-        showModal={showModal}
-        setShowModal={setShowModal}
-      />
+      <CartModal cart={cart} setCart={setCart} showModal={showModal} setShowModal={setShowModal} />
 
       {/* 구매하기 버튼 */}
       <div
