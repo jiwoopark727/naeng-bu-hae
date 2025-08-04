@@ -57,19 +57,14 @@ export default function DetailPage({ params }: Props) {
         }
 
         setStep(manualSteps);
-
-        console.log(manualSteps);
       } catch (err) {
         console.error(err);
       }
     };
 
     fetchRecipeDetail(menu);
-    console.log('레시피 디테일 api fetch');
   }, [menu]);
 
-  console.log(recipe);
-  console.log(step);
   if (!recipe) return <p className='p-4'>{menu} 레시피를 불러오는 중...</p>;
 
   return (

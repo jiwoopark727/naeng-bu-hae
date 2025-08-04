@@ -91,7 +91,7 @@ export default function DetailRecipe({ step }: Props) {
           <motion.div
             drag='x'
             dragConstraints={{ left: 0, right: 0 }}
-            onDragEnd={(event, info) => {
+            onDragEnd={(_, info) => {
               if (info.offset.x < -100) {
                 increaseIndex(); // 오른쪽으로 넘김
               } else if (info.offset.x > 100) {
