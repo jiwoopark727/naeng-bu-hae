@@ -33,7 +33,9 @@ export default function DetailPage({ params }: Props) {
 
     const fetchRecipeDetail = async (name: string) => {
       try {
-        const res = await fetch(`/api/recipes/detail?name=${encodeURIComponent(name)}`);
+        const res = await fetch(
+          `/api/recipes/detail?name=${encodeURIComponent(name)}`
+        );
         const json = await res.json();
 
         if (!res.ok || !json.success) {
@@ -73,9 +75,11 @@ export default function DetailPage({ params }: Props) {
     );
 
   return (
-    <div className='relative w-[393px] h-[calc(100vh-78px)] max-h-[758px] flex flex-col px-4 py-2 overflow-y-scroll [&::-webkit-scrollbar]:hidden md:h-[calc(100vh-3rem)] md:max-h-[calc(852px-4rem)]'>
+    <div className='relative w-[393px] md:h-[calc(100vh-78px)] md:max-h-[758px] flex flex-col px-4 py-2 overflow-y-scroll [&::-webkit-scrollbar]:hidden h-[calc(100vh-3rem)] max-h-[calc(852px-4rem)]'>
       {/* 제목 (헤더 안에 있으니 여기선 그냥 margin) */}
-      <div className='mb-3 text-center font-bold text-lg break-keep'>{recipe.RCP_NM}</div>
+      <div className='mb-3 text-center font-bold text-lg break-keep'>
+        {recipe.RCP_NM}
+      </div>
 
       {/* 이미지 */}
       <div className='flex justify-center mb-4'>
