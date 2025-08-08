@@ -6,14 +6,14 @@ import IngredientListModal from '@/app/components/IngredientListModal';
 export default function IngredientsPage() {
   return (
     <>
-      <div className='relative w-[393px] h-[800px] overflow-hidden'>
+      <div className='relative w-[393px] h-[calc(852px-3rem)] overflow-hidden'>
         {/* 배경이미지 */}
         <Image
           src={Background5}
           alt='Background'
           width={393}
           height={800}
-          className='absolute bottom-0 left-0 z-0'
+          className='absolute bottom-0 left-0 z-0 h-full'
         />
 
         {/* 겹쳐지는 냉장고 이미지 */}

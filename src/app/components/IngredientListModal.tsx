@@ -64,7 +64,7 @@ export default function IngredientListModal() {
             </span>
           </span>
 
-          <div className='text-[13px]'>
+          <div className='text-[13px] h-[calc(25rem-120px)] overflow-y-scroll [&::-webkit-scrollbar]:hidden'>
             <ul className='grid grid-cols-3 gap-x-3 gap-y-2'>
               {ingredients.map((item, idx) => (
                 <li key={idx} className='flex items-center'>
