@@ -50,7 +50,7 @@ export default function IngredientListModal() {
 
   return (
     <motion.div
-      className='absolute top-25 left-12 md:left-7 z-20 text-md text-black w-70 md:w-85 h-100 bg-white rounded-[15px] opacity-95 p-4'
+      className='absolute top-25 left-10 md:left-4 z-20 text-md text-black w-75 md:w-90 h-100 bg-white rounded-[15px] opacity-95 p-4'
       initial={{ opacity: 0, scale: 0.9, x: 10, y: -120 }}
       animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
       transition={{ duration: 0.4, ease: 'easeOut' }}
@@ -66,8 +66,8 @@ export default function IngredientListModal() {
             </span>
           </span>
 
-          <div className='text-[13px] md:text-[12px] h-[calc(25rem-120px)] overflow-y-scroll [&::-webkit-scrollbar]:hidden'>
-            <ul className='grid md:grid-cols-3 md:gap-x-1 md:gap-y-2 grid-cols-2 gap-x-2 gap-y-1'>
+          <div className='text-[13px] md:text-[11px] h-[calc(25rem-120px)] overflow-y-scroll [&::-webkit-scrollbar]:hidden'>
+            <ul className='grid md:grid-cols-3 md:gap-x-0 md:gap-y-2 grid-cols-2 gap-x-2 gap-y-1'>
               {ingredients.map((item, idx) => (
                 <li key={idx} className='flex items-center'>
                   <input
