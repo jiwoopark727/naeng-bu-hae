@@ -67,7 +67,7 @@ export default function RecipeList() {
         }
       },
       // threshold 0 ~ 1 까지 얼마나 화면에 보여야 콜백을 실행할 지 설정하는 값
-      { threshold: 1 }
+      { threshold: 0.5 }
     );
 
     const current = observerRef.current;

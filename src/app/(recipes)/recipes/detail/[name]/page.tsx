@@ -73,7 +73,7 @@ export default function DetailPage({ params }: Props) {
     );
 
   return (
-    <div className='relative w-[393px] h-[756px] flex flex-col px-4 py-2 overflow-y-scroll [&::-webkit-scrollbar]:hidden'>
+    <div className='relative w-[393px] h-[calc(100vh-78px)] max-h-[758px] flex flex-col px-4 py-2 overflow-y-scroll [&::-webkit-scrollbar]:hidden md:h-[calc(100vh-3rem)] md:max-h-[calc(852px-4rem)]'>
       {/* 제목 (헤더 안에 있으니 여기선 그냥 margin) */}
       <div className='mb-3 text-center font-bold text-lg break-keep'>{recipe.RCP_NM}</div>
 
