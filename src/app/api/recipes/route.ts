@@ -80,6 +80,7 @@ export async function POST(req: NextRequest) {
     const data = await res.json();
 
     const rows = data.COOKRCP01?.row ?? [];
+    console.log(rows);
 
     // 서버에서 재료 포함 여부 필터
     const filtered = rows.filter((recipe: Recipe) =>

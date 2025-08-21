@@ -22,8 +22,11 @@ export default function Header() {
   const pathname = usePathname();
 
   return (
-    <div className='w-full min-h-[78px] bg-white flex items-center px-6 justify-between md:min-h-12'>
-      <span className='text-3xl cursor-pointer hover:scale-105' onClick={handleLogoClick}>
+    <div className='w-full min-h-12 bg-white flex items-center px-6 justify-between md:min-h-[78px]'>
+      <span
+        className='text-3xl cursor-pointer hover:scale-105'
+        onClick={handleLogoClick}
+      >
         <Image src={Logo} alt='Logo' width={40} height={40}></Image>
       </span>
       <>
