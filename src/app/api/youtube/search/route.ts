@@ -45,10 +45,8 @@ export async function GET(req: Request) {
       success: true,
       videoId,
     });
-  } catch (err: any) {
-    return NextResponse.json(
-      { success: false, message: err.message },
-      { status: 500 }
-    );
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : '알 수 없는 오류가 발생했습니다.';
+    return NextResponse.json({ success: false, message }, { status: 500 });
   }
 }
