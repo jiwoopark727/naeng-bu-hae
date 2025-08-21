@@ -27,6 +27,7 @@ export default function DetailPage({ params }: Props) {
   const menu = decodeURIComponent(name);
   const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [step, setStep] = useState<StepItems[]>([]);
+  const [videoId, setVideoId] = useState<string | null>(null);
 
   useEffect(() => {
     if (!menu) return;
@@ -43,6 +44,7 @@ export default function DetailPage({ params }: Props) {
         }
 
         setRecipe(json.data);
+
         const manualSteps: StepItems[] = [];
 
         for (let i = 1; i <= 20; i++) {
@@ -59,6 +61,20 @@ export default function DetailPage({ params }: Props) {
         }
 
         setStep(manualSteps);
+
+        // 유튜브 영상 검색
+        const youtubeRes = await fetch(
+          `/api/youtube/search?q=${encodeURIComponent(menu + ' 레시피')}`
+        );
+        const youtubeJson = await youtubeRes.json();
+
+        if (!youtubeRes.ok || !youtubeJson.success) {
+          throw new Error(
+            youtubeJson.message || '레시피 유튜브를 불러오지 못했습니다.'
+          );
+        }
+
+        setVideoId(youtubeJson.videoId);
       } catch (err) {
         console.error(err);
       }
@@ -103,7 +119,24 @@ export default function DetailPage({ params }: Props) {
           ))}
         </div>
       </section>
+
+      {/* 조리 과정 */}
       <DetailRecipe step={step} />
+
+      {/* 유튜브 영상 */}
+      {videoId && (
+        <div className='mt-6'>
+          <h3 className='font-bold mb-2 text-sm'>YouTube 조리 영상</h3>
+          <iframe
+            width='100%'
+            height='315'
+            src={`https://www.youtube.com/embed/${videoId}`}
+            title={`${menu} 레시피 영상`}
+            allowFullScreen
+            className='rounded-xl w-full h-full'
+          />
+        </div>
+      )}
     </div>
   );
 }
