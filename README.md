@@ -64,11 +64,52 @@
 ## 🎬 배포 사이트 및 스크린샷 
 🚀 [냉부해 배포 사이트](https://naeng-bu-hae.vercel.app) - [https://naeng-bu-hae.vercel.app]
 
-(📸 추후 스크린샷 추가 예정)  
-- 홈 화면  
-- 재료 선택 화면  
-- 레시피 추천 결과 화면  
-- 레시피 상세 화면  
+<table>
+  <tr>
+    <td align="center">
+      <p><홈(초기) 화면></p>
+      <img src="https://raw.githubusercontent.com/jiwoopark727/naeng-bu-hae/main/public/assets/images/nbh_main.png" height="500" alt="홈 화면">
+    </td>
+    <td align="center">
+      <p><재료 화면></p>
+      <img src="https://raw.githubusercontent.com/jiwoopark727/naeng-bu-hae/main/public/assets/images/nbh_ingredient.png" height="500" alt="재료 화면">
+    </td>
+    <td align="center">
+      <p><레시피 리스트 화면></p>
+      <img src="https://raw.githubusercontent.com/jiwoopark727/naeng-bu-hae/main/public/assets/images/nbh_recipelist.png" height="500" alt="레시피 리스트 화면">
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <p><레시피 디테일 화면></p>
+      <img src="https://raw.githubusercontent.com/jiwoopark727/naeng-bu-hae/main/public/assets/images/nbh_recipedetail.png" height="500" alt="레시피 디테일 화면">
+    </td>
+    <td align="center">
+      <p><레시피 디테일2 화면></p>
+      <img src="https://raw.githubusercontent.com/jiwoopark727/naeng-bu-hae/main/public/assets/images/nbh_recipedetail2.png" height="500" alt="레시피 디테일2 화면">
+    </td>
+    <td align="center">
+      <p><마트 화면></p>
+      <img src="https://raw.githubusercontent.com/jiwoopark727/naeng-bu-hae/main/public/assets/images/nbh_mart.png" height="500" alt="마트 화면">
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <p><마트 검색 화면></p>
+      <img src="https://raw.githubusercontent.com/jiwoopark727/naeng-bu-hae/main/public/assets/images/nbh_mart_search.png" height="500" alt="마트 검색 화면">
+    </td>
+    <td align="center">
+      <p><장바구니 화면></p>
+      <img src="https://raw.githubusercontent.com/jiwoopark727/naeng-bu-hae/main/public/assets/images/nbh_mart_cart.png" height="500" alt="장바구니 화면">
+    </td>
+    <td align="center">
+      <p><구매 완료 화면></p>
+      <img src="https://raw.githubusercontent.com/jiwoopark727/naeng-bu-hae/main/public/assets/images/nbh_mart_buy.png" height="500" alt="구매 완료 화면">
+    </td>
+  </tr>
+</table>
+
+<br/>
 
 ---
 
