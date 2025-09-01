@@ -67,7 +67,10 @@ export async function POST(req: NextRequest) {
   const PAGE_SIZE = 10;
 
   if (!ingredients || !Array.isArray(ingredients)) {
-    return NextResponse.json({ error: '재료 배열이 필요합니다.' }, { status: 400 });
+    return NextResponse.json(
+      { error: '재료 배열이 필요합니다.' },
+      { status: 400 }
+    );
   }
 
   const start = 1;
@@ -98,6 +101,9 @@ export async function POST(req: NextRequest) {
     });
   } catch (err) {
     console.error('레시피 API 오류:', err);
-    return NextResponse.json({ error: '레시피를 불러오지 못했습니다.' }, { status: 500 });
+    return NextResponse.json(
+      { error: '레시피를 불러오지 못했습니다.' },
+      { status: 500 }
+    );
   }
 }
