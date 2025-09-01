@@ -83,60 +83,61 @@ export default function DetailPage({ params }: Props) {
     fetchRecipeDetail(menu);
   }, [menu]);
 
-  if (!recipe)
-    return (
-      <div className='w-full h-10 flex justify-center items-center'>
-        <span className='text-sm text-gray-400'>{menu} 불러오는 중...</span>
-      </div>
-    );
-
   return (
-    <div className='relative w-[393px] md:h-[calc(100vh-78px)] md:max-h-[758px] flex flex-col px-4 py-2 overflow-y-scroll [&::-webkit-scrollbar]:hidden h-[calc(100vh-3rem)] max-h-[calc(852px-4rem)] bg-[#fff2ea]'>
-      {/* 제목 (헤더 안에 있으니 여기선 그냥 margin) */}
-      <div className='mb-3 text-center font-bold text-lg break-keep'>
-        {recipe.RCP_NM}
-      </div>
-
-      {/* 이미지 */}
-      <div className='flex justify-center mb-4'>
-        <Image
-          src={recipe.ATT_FILE_NO_MAIN || fallback}
-          alt={recipe.RCP_NM}
-          width={350}
-          height={350}
-          className='rounded-xl object-cover'
-        />
-      </div>
-
-      {/* 재료 */}
-      <section className='bg-gray-50 rounded-xl border border-gray-300 p-3 mb-4 text-xs font-bold'>
-        <p className='mb-2'>재료</p>
-        <div className='font-normal space-y-1'>
-          {recipe.RCP_PARTS_DTLS.split(',').map((item) => (
-            <div key={item.trim()} className='pl-1'>
-              {item.trim()}
-            </div>
-          ))}
+    <>
+      {!recipe ? (
+        <div className='w-full h-10 flex justify-center items-center bg-[#fff2ea]'>
+          <span className='text-sm text-black'>불러오는 중...</span>
         </div>
-      </section>
+      ) : (
+        <div className='relative w-[393px] md:h-[calc(100vh-78px)] md:max-h-[758px] flex flex-col px-4 py-2 overflow-y-scroll [&::-webkit-scrollbar]:hidden h-[calc(100vh-3rem)] max-h-[calc(852px-4rem)] bg-[#fff2ea]'>
+          {/* 제목 (헤더 안에 있으니 여기선 그냥 margin) */}
+          <div className='mb-3 text-center font-bold text-lg break-keep'>
+            {recipe.RCP_NM}
+          </div>
 
-      {/* 조리 과정 */}
-      <DetailRecipe step={step} />
+          {/* 이미지 */}
+          <div className='flex justify-center mb-4'>
+            <Image
+              src={recipe.ATT_FILE_NO_MAIN || fallback}
+              alt={recipe.RCP_NM}
+              width={350}
+              height={350}
+              className='rounded-xl object-cover'
+            />
+          </div>
 
-      {/* 유튜브 영상 */}
-      {videoId && (
-        <div className='mt-6'>
-          <h3 className='font-bold mb-2 text-sm'>YouTube 조리 영상</h3>
-          <iframe
-            width='100%'
-            height='315'
-            src={`https://www.youtube.com/embed/${videoId}`}
-            title={`${menu} 레시피 영상`}
-            allowFullScreen
-            className='rounded-xl w-full h-full'
-          />
+          {/* 재료 */}
+          <section className='bg-gray-50 rounded-xl border border-gray-300 p-3 mb-4 text-xs font-bold'>
+            <p className='mb-2'>재료</p>
+            <div className='font-normal space-y-1'>
+              {recipe.RCP_PARTS_DTLS.split(',').map((item) => (
+                <div key={item.trim()} className='pl-1'>
+                  {item.trim()}
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* 조리 과정 */}
+          <DetailRecipe step={step} />
+
+          {/* 유튜브 영상 */}
+          {videoId && (
+            <div className='mt-6 mb-2'>
+              <h3 className='font-bold mb-2 text-sm'>YouTube 조리 영상</h3>
+              <iframe
+                width='100%'
+                height='315'
+                src={`https://www.youtube.com/embed/${videoId}`}
+                title={`${menu} 레시피 영상`}
+                allowFullScreen
+                className='rounded-xl w-full h-full'
+              />
+            </div>
+          )}
         </div>
       )}
-    </div>
+    </>
   );
 }
