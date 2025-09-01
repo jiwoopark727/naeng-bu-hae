@@ -66,7 +66,7 @@ export default function RecipeList() {
           setPage((prev) => prev + 1);
         }
       },
-      // threshold 0 ~ 1 까지 얼마나 화면에 보여야 콜백을 실행할 지 설정하는 값
+
       { threshold: 0.5 }
     );
 
@@ -85,7 +85,7 @@ export default function RecipeList() {
           <div
             key={idx}
             onClick={() => goToDetail(recipe.RCP_NM)}
-            className='border border-gray-300 rounded-lg overflow-hidden shadow hover:scale-105 transition cursor-pointer'
+            className='border border-gray-300 rounded-lg overflow-hidden shadow hover:scale-105 transition cursor-pointer bg-white'
           >
             <Image
               src={recipe.ATT_FILE_NO_MAIN || fallback}
@@ -94,13 +94,18 @@ export default function RecipeList() {
               height={200}
               className='w-full h-28 object-cover'
             />
-            <div className='p-2 text-sm text-center font-medium'>{recipe.RCP_NM}</div>
+            <div className='p-2 text-sm text-center font-medium'>
+              {recipe.RCP_NM}
+            </div>
           </div>
         ))}
       </div>
       {hasMore && (
-        <div ref={observerRef} className='w-full h-10 flex justify-center items-center'>
-          <span className='text-sm text-gray-400'>불러오는 중...</span>
+        <div
+          ref={observerRef}
+          className='w-full h-10 flex justify-center items-center bg-[#fff2ea]'
+        >
+          <span className='text-sm text-black'>불러오는 중...</span>
         </div>
       )}
     </>
